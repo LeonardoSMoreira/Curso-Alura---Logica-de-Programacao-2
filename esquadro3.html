@@ -1,0 +1,177 @@
+<center><h1>..:: Desenha Imagem ::..</h1></center>
+<h3>Informe as 3 coordenadas da imagem abaixo:</h3>
+
+<table border="1">
+    <tr align="center">
+        <th width="200"><h4>Figura 1</h4></th>
+        <th width="200"><h4>Figura 2</h4></th>
+    </tr>
+    <tr>
+        <td>
+            <dl><dt>Ponto A</dt>
+                <dt><dd>x: <input id="figura1pax" size=1 value=50>y: <input id="figura1pay" size=1 value=50></dd>
+                </dt>
+            </dl>
+            <dl><dt>Ponto B</dt>
+                <dt><dd>x: <input id="figura1pbx" size=1 value=50>y: <input id="figura1pby" size=1 value=400></dd>
+                </dt>
+            </dl>
+            <dl><dt>Ponto C</dt>
+                <dt><dd>x: <input id="figura1pcx" size=1 value=400>y: <input id="figura1pcy" size=1 value=400></dd>
+                </dt>
+            </dl>
+            <dl><dt>Cor: <input id="figura1cor" size=3 value='black'></dt>
+                </dt>
+            </dl>
+        </td>
+        <td>
+            <dl><dt>Ponto A</dt>
+                <dt><dd>x: <input id="figura2pax" size=1 value=100>y: <input id="figura2pay" size=1 value=175></dd>
+                </dt>
+            </dl>
+            <dl><dt>Ponto B</dt>
+                <dt><dd>x: <input id="figura2pbx" size=1 value=100>y: <input id="figura2pby" size=1 value=350></dd>
+                </dt>
+            </dl>
+            <dl><dt>Ponto C</dt>
+                <dt><dd>x: <input id="figura2pcx" size=1 value=275>y: <input id="figura2pcy" size=1 value=350></dd>
+                </dt>
+            </dl>
+            <dl><dt>Cor: <input id="figura2cor" size=3 value='yellow'></dt>
+                </dt>
+            </dl>
+        </td>
+    </tr>
+</table>
+<font color="red">(<i>valores validos de <b>0</b> a <b>600</b></i>)</font><br>
+
+<button id="gera">Gerar Imagem</button><button id="limpa">Limpa Imagem</button>
+<center><canvas id="tela" width="630" height="630"></canvas></center>
+
+<script>
+    var tela = document.querySelector('#tela');
+    var mao = tela.getContext('2d');
+
+    function limpaTela(){
+        mao.fillStyle = 'white';
+        mao.fillRect(0, 0, 630, 630);
+        mao.fill();
+    }
+
+    function desenhaArea(){
+        limpaTela();
+        for (var r = 0 ; r <= 3; r++){ //Escurece a dase do grafico desenhando 3x
+            for (var y = 0 ; y < 600 ; y += 20){
+                for (var x = 0 ; x < 600 ; x += 20){
+                    mao.fillStyle = 'white';
+                    mao.fillRect(x+20, y+20, 20, 20)
+                    mao.strokeStyle = 'black';
+                    mao.strokeRect(x+20, y+20, 20, 20);
+                }
+            }
+            for (var x = 0 ; x <= 600 ; x += 20){
+                escreveTexto(x+9, 10, x, 'red');
+            }
+            for (var y = 0 ; y <= 600 ; y += 20){
+                escreveTexto(0, y+23, y, 'green');
+            }
+        }
+    }
+
+    function desenhaTriangulo(){
+        mao.fillStyle = 'black';
+        mao.beginPath();
+        mao.moveTo(50, 50);
+        mao.lineTo(50, 400);
+        mao.lineTo(400, 400);
+        mao.fill();
+    }
+
+    function escreveTexto(x, y, msg, cor){
+        mao.font = '10px Georgia';
+        mao.fillStyle = cor;
+        mao.fillText(msg, x, y);
+    }
+
+    function coletaValores(){
+        var coordenadas = [];
+            var figura1pax = document.querySelector('#figura1pax');
+            coordenadas[0] = parseInt(figura1pax.value);
+            var figura1pay = document.querySelector('#figura1pay');
+            coordenadas[1] = parseInt(figura1pay.value);
+            var figura1pbx = document.querySelector('#figura1pbx');
+            coordenadas[2] = parseInt(figura1pbx.value);
+            var figura1pby = document.querySelector('#figura1pby');
+            coordenadas[3] = parseInt(figura1pby.value);
+            var figura1pcx = document.querySelector('#figura1pcx');
+            coordenadas[4] = parseInt(figura1pcx.value);
+            var figura1pcy = document.querySelector('#figura1pcy');
+            coordenadas[5] = parseInt(figura1pcy.value);
+            var figura2pax = document.querySelector('#figura2pax');
+            coordenadas[6] = parseInt(figura2pax.value);
+            var figura2pay = document.querySelector('#figura2pay');
+            coordenadas[7] = parseInt(figura2pay.value);
+            var figura2pbx = document.querySelector('#figura2pbx');
+            coordenadas[8] = parseInt(figura2pbx.value);
+            var figura2pby = document.querySelector('#figura2pby');
+            coordenadas[9] = parseInt(figura2pby.value);
+            var figura2pcx = document.querySelector('#figura2pcx');
+            coordenadas[10] = parseInt(figura2pcx.value);
+            var figura2pcy = document.querySelector('#figura2pcy');
+            coordenadas[11] = parseInt(figura2pcy.value);
+        for (var i = 0 ; i < coordenadas.length ; i++){
+            console.log(coordenadas[i]);
+        }
+        return coordenadas;
+    }
+
+    function verificaValores(coordenadas){
+        var erroValor = true
+        for (var i = 0 ; i <= coordenadas.length ; i++){
+            if (coordenadas[i]<0 || coordenadas[i]>600){
+                var erroValor = false;
+                alert('Atenção\nValores fora do intervalo permitido.\nVerificar os valores informados.');
+                break;
+            }
+        }
+        console.log(erroValor);
+        return erroValor;
+    }
+
+    function desenhaImagem(coordenadas){
+        var figura1cor = document.querySelector('#figura1cor');
+        mao.fillStyle = figura1cor.value;
+        mao.beginPath();
+        mao.moveTo(coordenadas[0], coordenadas[1]);
+        mao.lineTo(coordenadas[2], coordenadas[3]);
+        mao.lineTo(coordenadas[4], coordenadas[5]);
+        mao.fill();
+        var figura2cor = document.querySelector('#figura2cor');
+        mao.fillStyle = figura2cor.value;
+        mao.beginPath();
+        mao.moveTo(coordenadas[6], coordenadas[7]);
+        mao.lineTo(coordenadas[8], coordenadas[9]);
+        mao.lineTo(coordenadas[10], coordenadas[11]);
+        mao.fill();        
+    }
+
+    function montaDesenho(){
+        desenhaArea();
+        coordenadas = coletaValores();
+        console.log(coordenadas);
+        erroValor = verificaValores(coordenadas);
+        console.log(erroValor);
+        if (erroValor==true){
+            desenhaImagem(coordenadas);
+        } else {
+            limpaTela();
+        }
+    }
+
+    var gera = document.querySelector('#gera');
+    gera.onclick = montaDesenho;
+
+    var limpa = document.querySelector('#limpa');
+    limpa.onclick = limpaTela;
+
+</script>

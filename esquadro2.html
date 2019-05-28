@@ -1,0 +1,46 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+function desenhaEsquadro(xa, ya, xc, yc, cor) {
+
+    pincel.fillStyle=cor;
+    pincel.beginPath();
+    pincel.moveTo(xa, ya);
+    pincel.lineTo(xa, yc);
+    pincel.lineTo(xc, yc);
+    pincel.fill();
+
+   // alteração para apenas uma chamada da função
+    pincel.fillStyle = 'white'
+    pincel.beginPath();
+    pincel.moveTo(xa * 2, ya * 3.5);
+    pincel.lineTo(xa * 2, yc - xa);
+    pincel.lineTo(xa * 5.5, yc - xa);
+    pincel.fill();
+
+}
+
+function desenhaTexto(texto, x, y){
+
+    var tela = document.querySelector("canvas");
+
+    var pincel = tela.getContext("2d");
+
+    pincel.font = "20px Georgia";
+    pincel.fillStyle = "black";
+    pincel.fillText(texto, x, y);
+
+}
+
+desenhaTexto("A", 30, 50);
+desenhaTexto("B", 30, 400);
+desenhaTexto("C", 410, 400);
+
+desenhaEsquadro(50, 50, 400, 400, "black");
+// desenhaEsquadro(100, 175, 275, 350, "white");
+
+</script>
